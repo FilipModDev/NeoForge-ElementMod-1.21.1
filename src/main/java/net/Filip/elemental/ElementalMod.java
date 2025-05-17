@@ -1,5 +1,9 @@
 package net.Filip.elemental;
 
+import net.Filip.elemental.item.ModFood;
+import net.Filip.elemental.item.ModItems;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -44,6 +48,12 @@ public class ElementalMod {
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
+        ModItems.register(modEventBus);
+        ModFood.register(modEventBus);
+
+
+
+
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -66,7 +76,17 @@ public class ElementalMod {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(ModItems.FIRE_HEART_RENMANT);
+            event.accept(ModItems.WATER_HEART_RENMANT);
+            event.accept(ModItems.EARTH_HEART_RENMANT);
+            event.accept(ModItems.AIR_HEART_RENMANT);
 
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)  {
+            event.accept(ModFood.FOOD_EXAMPLE);
+        }
 
     }
 
